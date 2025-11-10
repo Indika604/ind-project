@@ -20,6 +20,5 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: Upload index.html to GCS bucket
-       
- run: |
+        run: |
           gsutil cp -a public-read index.html gs://ind-html-bucket/index.html

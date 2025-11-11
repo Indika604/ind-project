@@ -26,4 +26,4 @@ jobs:
 
       - name: Upload index.html to GCS
         run: |
-          gsutil cp -a public-read index.html gs://ind-html-bucket/index.html
+          gsutil cp index.html gs://ind-html-bucket/index.html

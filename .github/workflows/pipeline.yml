@@ -16,7 +16,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Configure gcloud
-        run: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v2
 
 
       - name: Upload index.html to GCS bucket

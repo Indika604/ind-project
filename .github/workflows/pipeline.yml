@@ -10,17 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Google Cloud authentication
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Configure gcloud
-        uses: google-github-actions/setup-gcloud@v2
-
-      - name: Build
-        run: npm run build
+      - name: Set up GCP credentials
+        run: echo "${{ secrets.GCP_SA_KEY }}" > gcp-key.json
+        
+      - name: Authenticate gcloud
+        run: gcloud auth activate-service-account --key-file=gcp-key.json
+             gcloud config set project ind-html
 
       - name: Upload index.html to GCS bucket
         run: |
-          gsutil cp -a public-read index.html gs://ind-html-bucket/index.html
+          gsutil cp index.html gs://ind-html-bucket/index.html

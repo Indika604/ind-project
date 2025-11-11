@@ -18,6 +18,10 @@ jobs:
       - name: Configure gcloud
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Debug — list files
+        run: |
+          pwd
+          ls -R
 
       - name: Upload index.html to GCS bucket
         run: |

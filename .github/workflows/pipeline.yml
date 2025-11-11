@@ -1,4 +1,4 @@
-name: Deploy to Google Cloud Storage
+name: Deploy to GCS
 
 on:
   push:
@@ -7,19 +7,23 @@ on:
 
 jobs:
   deploy:
+    name: Upload index.html to GCS
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ind-html
-          export_default_credentials: true
-      
-      - name: Upload index.html to GCS bucket
+
+      - name: Upload index.html to GCS
         run: |
           gsutil cp -a public-read index.html gs://ind-html-bucket/index.html
